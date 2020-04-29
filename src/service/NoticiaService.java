@@ -22,5 +22,9 @@ public class NoticiaService {
 	public Noticia carregar(int id){
 		return dao.carregar(id);
 	}
+	
+	public int[] listId() {
+		return dao.listId();
+	}
 
 }
