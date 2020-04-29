@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.ArrayList;
 
 import model.Noticia;
 
@@ -81,6 +83,33 @@ public class NoticiaDAO {
 			System.out.print(e1.getStackTrace());
 		}
 		return noticia;
+	}
+	
+	public int[] listId() {
+		String sqlSelect = "SELECT id from noticia";
+		try (Connection conn = ConnectionFactory.obtemConexao();
+				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
+			try (ResultSet rs = stm.executeQuery();) {
+				int contalista=0;
+				while(rs.next()) {
+					contalista++;
+				}
+				int[] listId = null;
+				
+				int con = 0;
+				while(rs.next()) {
+					listId[con] = Integer.valueOf(rs.getString("id"));
+					con++;
+				}
+				return listId;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
 	}
 
 }
