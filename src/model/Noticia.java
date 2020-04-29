@@ -3,10 +3,14 @@ package model;
 import java.io.Serializable;
 
 public class Noticia implements Serializable {
-	private static final long seriaVersionUID = 1L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String titulo;
 	private String conteudo;
+	private String idNoticia;
 	
 	public Noticia() {
 	}
@@ -31,15 +35,21 @@ public class Noticia implements Serializable {
 		return conteudo;
 	}
 
-	public void setConteudo(String conteúdo) {
-		conteudo = conteúdo;
+	public void setConteudo(String conteudo) {
+		this.conteudo = conteudo;
 	}
 
-	public static long getSeriaversionuid() {
-		return seriaVersionUID;
+	public String getIdNoticia() {
+		return idNoticia;
 	}
+
+	public void setIdNoticia(String idNoticia) {
+		this.idNoticia = idNoticia;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	
-	public String toString() {
-		return "Noticia [id=" + id + ", titulo=" + titulo + ", conteudo=" + conteudo + "]";
-	}
 }
