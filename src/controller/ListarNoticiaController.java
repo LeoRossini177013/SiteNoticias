@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,21 +32,19 @@ public class ListarNoticiaController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String pTitulo = request.getParameter("titulo");
-		int pId = request.getIntHeader("id");
 		
-		NoticiaService cs = new NoticiaService();
-		int [] ids = cs.listId();
-		PrintWriter out = response.getWriter();
 		Noticia noticia = new Noticia();
-		noticia.setId(pId);
-		noticia.setTitulo(pTitulo);
+		NoticiaService cs = new NoticiaService();
+		ArrayList<String> ids = cs.listId();
+		PrintWriter out = response.getWriter();
 		out.println("<html><head><title>Notícias</title></head><body>");
+		out.println("<h2>Lista de Noticias<h2>");
 		
-		for(int i = 0; i<ids.length; ++i) {
-			cs.carregar(ids[i]);
-			out.println("<h3>"+ noticia.getTitulo() + "<h3><br>");
+		for (String id : ids) {
+			noticia = cs.carregar(id);
+			out.println("<h3><a href=/LerNoticias.do?id="+noticia.getId()+">" + noticia.getTitulo() + "</a><h3><br>");
 		}
+		
 	    out.println("</body></html>");
 		
 	}

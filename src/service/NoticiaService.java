@@ -1,13 +1,16 @@
 package service;
 
 import model.Noticia;
+
+import java.util.ArrayList;
+
 import dao.NoticiaDAO;
 
 
 public class NoticiaService {
 	NoticiaDAO dao = new NoticiaDAO();
 	
-	public int criar(Noticia noticia) {
+	public String criar(Noticia noticia) {
 		return dao.criar(noticia);
 	}
 	
@@ -15,15 +18,15 @@ public class NoticiaService {
 		dao.atualizar(noticia);
 	}
 	
-	public void excluir(int id){
-		dao.excluir(id);
+	public void excluir(Noticia noticia){
+		dao.excluir(noticia);
 	}
 	
-	public Noticia carregar(int id){
+	public Noticia carregar(String id){
 		return dao.carregar(id);
 	}
 	
-	public int[] listId() {
+	public ArrayList<String> listId() {
 		return dao.listId();
 	}
 

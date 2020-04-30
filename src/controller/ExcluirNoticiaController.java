@@ -13,26 +13,27 @@ import model.Noticia;
 import service.NoticiaService;
 
 /**
- * Servlet implementation class ManterClienteController
+ * Servlet implementation class ExcluirNoticiaController
  */
 @WebServlet("/ExcluirNoticia.do")
 public class ExcluirNoticiaController extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int pId = request.getIntHeader("id");
-
-        //instanciar o javabean
-        int id = pId;
-
-        //instanciar o service
-        NoticiaService cs = new NoticiaService();
-        cs.excluir(id);
-
-        PrintWriter out = response.getWriter();
-        out.println("<html><head><title>Noticia Excluida</title></head><body>");
-        out.println("</body></html>");
-
-    }
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String pId = request.getParameter("id");
+		
+		//instanciar o javabean
+		Noticia noticia = new Noticia();
+		noticia.setId(pId);
+		
+		//instanciar o service
+		NoticiaService cs = new NoticiaService();
+		cs.excluir(noticia);
+		
+		PrintWriter out = response.getWriter();
+		out.println("<html><head><h3>Noticia Excluida</h3></head><body>");
+	    out.println("</body></html>");
+		
+	}
 
 }

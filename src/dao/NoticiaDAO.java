@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import model.Noticia;
 
 public class NoticiaDAO {
-	public int criar(Noticia noticia) {
+	public String criar(Noticia noticia) {
 		String sqlInsert = "INSERT INTO noticia(titulo, conteudo) VALUES (?, ?)";
 		// usando o try with resources do Java 7, que fecha o que abriu
 		try (Connection conn = ConnectionFactory.obtemConexao();
@@ -22,7 +22,7 @@ public class NoticiaDAO {
 			try (PreparedStatement stm2 = conn.prepareStatement(sqlQuery);
 					ResultSet rs = stm2.executeQuery();) {
 				if (rs.next()) {
-					noticia.setId(rs.getInt(1));
+					noticia.setId(String.valueOf(rs.getInt(1)));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -40,39 +40,38 @@ public class NoticiaDAO {
 				PreparedStatement stm = conn.prepareStatement(sqlUpdate);) {
 			stm.setString(1, noticia.getTitulo());
 			stm.setString(2, noticia.getConteudo());
-			stm.setInt(4, noticia.getId());
+			stm.setString(3, noticia.getId());
 			stm.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void excluir(int id) {
+	public void excluir(Noticia noticia) {
 		String sqlDelete = "DELETE FROM noticia WHERE id = ?";
 		// usando o try with resources do Java 7, que fecha o que abriu
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlDelete);) {
-			stm.setInt(1, id);
+			stm.setString(1, noticia.getId());
 			stm.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public Noticia carregar(int id) {
+	public Noticia carregar(String id) {
 		Noticia noticia= new Noticia();
-		noticia.setId(id);
-		String sqlSelect = "SELECT nome, fone, email FROM cliente WHERE cliente.id = ?";
+		String sqlSelect = "SELECT titulo , conteudo FROM noticia WHERE noticia.id = ?";
 		// usando o try with resources do Java 7, que fecha o que abriu
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
-			stm.setInt(1, noticia.getId());
+			stm.setString(1, noticia.getId());
 			try (ResultSet rs = stm.executeQuery();) {
 				if (rs.next()) {
-					noticia.setTitulo(rs.getString("nome"));
-					noticia.setConteudo(rs.getString("populacao"));
+					noticia.setTitulo(rs.getString("titulo"));
+					noticia.setConteudo(rs.getString("conteudo"));
 				} else {
-					noticia.setId(-1);
+					noticia.setId(null);
 					noticia.setTitulo(null);
 					noticia.setConteudo(null);
 				}
@@ -85,24 +84,20 @@ public class NoticiaDAO {
 		return noticia;
 	}
 	
-	public int[] listId() {
-		String sqlSelect = "SELECT id from noticia";
+	public ArrayList<String> listId() {
+		Noticia noticia = new Noticia();
+		String sqlSelect = "SELECT * from noticia";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
 			try (ResultSet rs = stm.executeQuery();) {
-				int contalista=0;
-				while(rs.next()) {
-					contalista++;
+				ArrayList<String> listId = new ArrayList<String>();
+				for (int i = 1; rs.next(); ++i) {
+					listId.add(rs.getString(i));
 				}
-				int[] listId = null;
 				
-				int con = 0;
-				while(rs.next()) {
-					listId[con] = Integer.valueOf(rs.getString("id"));
-					con++;
-				}
-				return listId;
+					return listId;
 			}
+
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
