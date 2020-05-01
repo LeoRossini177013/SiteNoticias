@@ -26,7 +26,7 @@ public class NoticiaService {
 		return dao.carregar(id);
 	}
 	
-	public ArrayList<String> listId() {
+	public ArrayList<Noticia> listId() {
 		return dao.listId();
 	}
 
