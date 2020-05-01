@@ -61,6 +61,7 @@ public class NoticiaDAO {
 
 	public Noticia carregar(String id) {
 		Noticia noticia= new Noticia();
+		noticia.setId(id);
 		String sqlSelect = "SELECT titulo , conteudo FROM noticia WHERE noticia.id = ?";
 		// usando o try with resources do Java 7, que fecha o que abriu
 		try (Connection conn = ConnectionFactory.obtemConexao();
@@ -84,16 +85,19 @@ public class NoticiaDAO {
 		return noticia;
 	}
 	
-	public ArrayList<String> listId() {
-		Noticia noticia = new Noticia();
-		String sqlSelect = "SELECT * from noticia";
+	public ArrayList<Noticia> listId() {
+		String sqlSelect = "SELECT * from noticia WHERE titulo is not null";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
 			try (ResultSet rs = stm.executeQuery();) {
-				ArrayList<String> listId = new ArrayList<String>();
-				for (int i = 1; rs.next(); ++i) {
-					listId.add(rs.getString(i));
-				}
+				ArrayList<Noticia> listId = new ArrayList<Noticia>();
+				while (rs.next()) {
+					Noticia noticia = new Noticia();
+					noticia.setId(rs.getString("id"));
+					noticia.setTitulo(rs.getString("titulo"));
+					noticia.setConteudo(rs.getString("conteudo"));
+					listId.add(noticia);
+				} 
 				
 					return listId;
 			}
