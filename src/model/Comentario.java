@@ -7,15 +7,18 @@ public class Comentario implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int idComentario;
+	private String idComentario;
 	private String nome;
 	private String comentario;
-	private int idNoticia;
+	private String idNoticia;
 	
-	public int getIdComentario() {
+	public Comentario() {
+	}
+	
+	public String getIdComentario() {
 		return idComentario;
 	}
-	public void setIdComentario(int idComentario) {
+	public void setIdComentario(String idComentario) {
 		this.idComentario = idComentario;
 	}
 	public String getNome() {
@@ -30,14 +33,18 @@ public class Comentario implements Serializable {
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
 	}
-	public int getIdNoticia() {
+	public String getIdNoticia() {
 		return idNoticia;
 	}
-	public void setIdNoticia(int idNoticia) {
+	public void setIdNoticia(String idNoticia) {
 		this.idNoticia = idNoticia;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	
+	public String toString() {
+		return "Comentario [idComentario=" + idComentario + ", nome=" + nome + ", comentario=" + comentario + ", idNoticia=" + idNoticia +"]";
 	}
 
 }
