@@ -32,6 +32,8 @@ public class ExcluirNoticiaController extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();
 		out.println("<html><head><h3>Noticia Excluida</h3></head><body>");
+		out.println("<form action=index.html method=post>");
+		out.println("<input type=submit value=Voltar ao Menu>");
 	    out.println("</body></html>");
 		
 	}

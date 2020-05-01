@@ -31,6 +31,8 @@ public class LerNoticiaController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		response.setContentType("text/html");
 		String pId = request.getParameter("id");
 		
 		//instanciar o javabean
@@ -39,13 +41,14 @@ public class LerNoticiaController extends HttpServlet {
 		
 		//instanciar o service
 		NoticiaService cs = new NoticiaService();
-		cs.carregar(noticia.getId());
+		noticia = cs.carregar(noticia.getId());
 		
-		PrintWriter out = response.getWriter();
-		out.println("<html><head><title></title></head><body>");
+		out.println("<html><head><title>Noticia</title></head><body>");
 		out.println("<h3>"+noticia.getTitulo()+"<h3>");
-		out.println(noticia.getConteudo()+"<br>");
-	    out.println("</body></html>");
+		out.println("<h4>"+noticia.getConteudo()+"<h4><br>");
+		out.println("<form action=index.html method=post>");
+		out.println("<input type=submit value=Voltar ao Menu>");
+		out.println("</body></html>");
 		
 	}
 

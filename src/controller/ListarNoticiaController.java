@@ -33,16 +33,17 @@ public class ListarNoticiaController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Noticia noticia = new Noticia();
 		NoticiaService cs = new NoticiaService();
-		ArrayList<String> ids = cs.listId();
+		ArrayList<Noticia> ids = cs.listId();
 		PrintWriter out = response.getWriter();
 		out.println("<html><head><title>Notícias</title></head><body>");
 		out.println("<h2>Lista de Noticias<h2>");
+		out.println("<form action=index.html method=post>");
+		out.println("<input type=submit value=Voltar ao Menu>");
+		out.println("</form>");
 		
-		for (String id : ids) {
-			noticia = cs.carregar(id);
-			out.println("<h3><a href=/LerNoticias.do?id="+noticia.getId()+">" + noticia.getTitulo() + "</a><h3><br>");
+		for (Noticia id : ids) {
+			out.println("<h3><a href=/LerNoticia.do?id="+id.getId()+">"+ id.getTitulo() + "</a><h3>");
 		}
 		
 	    out.println("</body></html>");

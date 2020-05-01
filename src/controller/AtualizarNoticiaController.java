@@ -50,6 +50,8 @@ public class AtualizarNoticiaController extends HttpServlet {
 		out.println(	"id: "+noticia.getId()+"<br>");
 		out.println(	"titulo: "+noticia.getTitulo()+"<br>");
 		out.println(	"conteudo: "+noticia.getConteudo()+"<br>");
+		out.println("<form action=index.html method=post>");
+		out.println("<input type=submit value=Voltar ao Menu>");
 	    out.println("</body></html>");
 		
 	}
